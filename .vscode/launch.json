@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Startup",
+            "request": "launch",
+            "mainClass": "br.com.marcelo.restwithspringbootinjava.Startup",
+            "projectName": "rest-with-spring-boot-in-java"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-RestWithSpringBootInJavaApplication<rest-with-spring-boot-in-java>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.com.marcelo.restwithspringbootinjava.RestWithSpringBootInJavaApplication",
+            "projectName": "rest-with-spring-boot-in-java",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

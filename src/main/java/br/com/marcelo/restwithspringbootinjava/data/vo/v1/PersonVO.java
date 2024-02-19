@@ -1,24 +1,15 @@
-package br.com.marcelo.restwithspringbootinjava.model;
-
-import jakarta.persistence.*;
+package br.com.marcelo.restwithspringbootinjava.data.vo.v1;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name="person")
-public class Person  implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+public class PersonVO implements Serializable {
     private Long id;
-    @Column(name="first_name",nullable = false,length = 80)
     private String firstName;
-    @Column(name="last_name",nullable = false,length = 80)
+
     private String lastName;
-    @Column(nullable = false,length = 100)
+
     private String address;
-    @Column(nullable = false,length = 10)
     private String gender;
 
     public Long getId() {
@@ -29,7 +20,7 @@ public class Person  implements Serializable {
         this.id = id;
     }
 
-    public Person() {
+    public PersonVO() {
     }
 
     public String getFirstName() {
@@ -67,7 +58,7 @@ public class Person  implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Person person)) return false;
+        if (!(o instanceof PersonVO person)) return false;
         return Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(address, person.address) && Objects.equals(gender, person.gender);
     }
 
