@@ -2,7 +2,6 @@ package br.com.marcelo.restwithspringbootinjava.services;
 
 import br.com.marcelo.restwithspringbootinjava.data.vo.v1.PersonVO;
 import br.com.marcelo.restwithspringbootinjava.exceptions.ResourceNotFoundException;
-import br.com.marcelo.restwithspringbootinjava.mapper.OrikaMapper;
 import br.com.marcelo.restwithspringbootinjava.mapper.PersonMapper;
 import br.com.marcelo.restwithspringbootinjava.model.Person;
 import br.com.marcelo.restwithspringbootinjava.repository.PersonRepository;
@@ -18,8 +17,10 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+    @Autowired
+    PersonMapper personMapper;
     private Logger logger =Logger.getLogger(PersonServices.class.getName());
-    public Person findById(Long id){
+    public PersonVO findById(Long id){
         logger.info("Finding one person!");
 
         var entity =  repository.findById(id)
@@ -27,12 +28,17 @@ public class PersonServices {
                         new ResourceNotFoundException("No records found for this ID!")
                 );
         
-        return  entity;
+        return  personMapper.personToPersonVO(entity);
     }
-    public List<Person>  findByAll(){
+    public List<PersonVO>  findByAll(){
 
         var listaPerson = repository.findAll();
-        return listaPerson;
+        List<PersonVO> personVOList = new ArrayList<>();
+        listaPerson.forEach(person -> {
+            PersonVO personVO = personMapper.personToPersonVO(person);
+            personVOList.add(personVO);
+        });
+        return personVOList;
     }
 
     private PersonVO mockPerson(int i) {
@@ -44,13 +50,14 @@ public class PersonServices {
         person.setGender("Male");
         return person;
     }
-    public Person create(Person person) {
+    public PersonVO create(PersonVO personVO) {
         logger.info("Creating one person!");
-        var save = repository.save(person);
-        return save;
+        var save = repository.save(personMapper.personVoToPerson(personVO));
+        return personMapper.personToPersonVO(save);
     }
-    public Person update(Person person) {
+    public PersonVO update(PersonVO personVO) {
         logger.info("Updating one person!");
+        Person person = personMapper.personVoToPerson(personVO);
         var entity = repository.findById(person.getId())
                 .orElseThrow(()->
                         new ResourceNotFoundException("No records found for this ID!")
@@ -59,7 +66,8 @@ public class PersonServices {
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
-        return  entity;
+        var save  =repository.save(entity);
+        return  personMapper.personToPersonVO(save);
     }
     public void delete(Long id) {
         logger.info("Deleting one person!");
