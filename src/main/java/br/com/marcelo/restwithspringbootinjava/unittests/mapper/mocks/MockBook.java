@@ -1,11 +1,12 @@
-package br.com.erudio.unittests.mapper.mocks;
+package br.com.marcelo.restwithspringbootinjava.unittests.mapper.mocks;
 
+import br.com.marcelo.restwithspringbootinjava.data.vo.v1.BookVO;
+import br.com.marcelo.restwithspringbootinjava.model.Book;
+
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import br.com.erudio.data.vo.v1.BookVO;
-import br.com.erudio.model.Book;
 
 public class MockBook {
 
@@ -37,20 +38,20 @@ public class MockBook {
     public Book mockEntity(Integer number) {
         Book book = new Book();
         book.setId(number.longValue());
-        book.setAuthor("Some Author" + number);
-        book.setLaunchDate(new Date());
-        book.setPrice(25D);
-        book.setTitle("Some Title" + number);
+        book.setAutor("Some Author" + number);
+        book.setDataLancamento(LocalDate.of(1999, Month.APRIL,4));
+        book.setPreco(25D);
+        book.setTitulo("Some Title" + number);
         return book;
     }
 
     public BookVO mockVO(Integer number) {
         BookVO book = new BookVO();
-        book.setKey(number.longValue());
-        book.setAuthor("Some Author" + number);
-        book.setLaunchDate(new Date());
-        book.setPrice(25D);
-        book.setTitle("Some Title" + number);
+        book.setId(number.longValue());
+        book.setAutor("Some Author" + number);
+        book.setDataLancamento(LocalDate.now());
+        book.setPreco(25D);
+        book.setTitulo("Some Title" + number);
         return book;
     }
 

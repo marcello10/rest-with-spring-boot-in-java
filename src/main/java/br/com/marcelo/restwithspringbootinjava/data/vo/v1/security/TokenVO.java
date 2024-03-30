@@ -1,15 +1,27 @@
 package br.com.marcelo.restwithspringbootinjava.data.vo.v1.security;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class AccountCredentialsVO implements Serializable {
+public class TokenVO implements Serializable {
     private String userName;
-    private String password;
+    private Boolean authenticated;
+    private Date created;
+    private Date expiration;
+    private String accessToken;
+    private String refreshToken;
 
-    public AccountCredentialsVO(String userName, String password) {
+    public TokenVO(String userName, Boolean authenticated, Date created, Date expiration, String accessToken, String refreshToken) {
         this.userName = userName;
-        this.password = password;
+        this.authenticated = authenticated;
+        this.created = created;
+        this.expiration = expiration;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
+
+    public TokenVO() {
     }
 
     public String getUserName() {
@@ -20,24 +32,56 @@ public class AccountCredentialsVO implements Serializable {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public Boolean getAuthenticated() {
+        return authenticated;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAuthenticated(Boolean authenticated) {
+        this.authenticated = authenticated;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(Date expiration) {
+        this.expiration = expiration;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AccountCredentialsVO that = (AccountCredentialsVO) o;
-        return Objects.equals(userName, that.userName) && Objects.equals(password, that.password);
+        TokenVO tokenVO = (TokenVO) o;
+        return Objects.equals(userName, tokenVO.userName) && Objects.equals(authenticated, tokenVO.authenticated) && Objects.equals(created, tokenVO.created) && Objects.equals(expiration, tokenVO.expiration) && Objects.equals(accessToken, tokenVO.accessToken) && Objects.equals(refreshToken, tokenVO.refreshToken);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userName, password);
+        return Objects.hash(userName, authenticated, created, expiration, accessToken, refreshToken);
     }
 }

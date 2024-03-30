@@ -1,7 +1,6 @@
 package br.com.marcelo.restwithspringbootinjava.services;
 
 import br.com.marcelo.restwithspringbootinjava.controllers.BookController;
-import br.com.marcelo.restwithspringbootinjava.controllers.PersonController;
 import br.com.marcelo.restwithspringbootinjava.data.vo.v1.BookVO;
 import br.com.marcelo.restwithspringbootinjava.exceptions.RequiredObjectIsNullException;
 import br.com.marcelo.restwithspringbootinjava.exceptions.ResourceNotFoundException;
@@ -34,7 +33,7 @@ public class BookServices {
                 );
         var vo = bookMapper.bookToBookVO(entity);
         //var vo = personMapper.personToPersonVO(entity);
-        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        vo.add(linkTo(methodOn(BookController.class).findById(id)).withSelfRel());
         return vo;
     }
     public List<BookVO>  findByAll(){
@@ -55,10 +54,11 @@ public class BookServices {
     public BookVO create(BookVO bookVO) throws Exception {
         if(bookVO == null) throw new RequiredObjectIsNullException();
         logger.info("Creating one book!");
-        var save = repository.save(bookMapper.bookVOToBook(bookVO));
+        var book = bookMapper.bookVOToBook(bookVO);
+        var save = repository.save(book);
         var vo = bookMapper.bookToBookVO(save);
         //var vo = personMapper.personToPersonVO(save);
-        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getId())).withSelfRel());
+        vo.add(linkTo(methodOn(BookController.class).findById(vo.getId())).withSelfRel());
         return vo;
     }
     public BookVO update(BookVO bookVO) throws Exception {
@@ -75,7 +75,7 @@ public class BookServices {
         entity.setTitulo(book.getTitulo());
         var save  =repository.save(entity);
         var vo = bookMapper.bookToBookVO(save);
-        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getId())).withSelfRel());
+        vo.add(linkTo(methodOn(BookController.class).findById(vo.getId())).withSelfRel());
         return vo;
     }
     public void delete(Long id) {
